@@ -13,7 +13,8 @@ public static class ArraySelector
 
     private static int[] ListSelector(int[] list1, int[] list2, int[] select)  
     {  
-        var results = new List<int>();  
+        var results = new List<int>();
+          
 
         // Iterate through the selection array  
         for (int i = 0; i < select.Length; i++)  
