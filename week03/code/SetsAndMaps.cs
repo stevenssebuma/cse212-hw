@@ -21,8 +21,21 @@ public static class SetsAndMaps
     /// <param name="words">An array of 2-character words (lowercase, no duplicates)</param>
     public static string[] FindPairs(string[] words)
     {
-        // TODO Problem 1 - ADD YOUR CODE HERE
-        return [];
+        var result = new List<string>();
+        var wordSet = new HashSet<string>(words);
+
+        foreach (var word in words)
+        {
+            var reversed = new string(word.Reverse().ToArray());
+            if (wordSet.Contains(reversed) && word != reversed)
+            {
+                result.Add($"{word} & {reversed}");
+                wordSet.Remove(word);
+                wordSet.Remove(reversed);
+            }
+        }
+
+        return result.ToArray();
     }
 
     /// <summary>
@@ -42,10 +55,20 @@ public static class SetsAndMaps
         foreach (var line in File.ReadLines(filename))
         {
             var fields = line.Split(",");
-            // TODO Problem 2 - ADD YOUR CODE HERE
+            var degree = fields[3];
+            if (degrees.ContainsKey(degree))
+            {
+                degrees[degree]++;
+            }
+            else
+            {
+                degrees[degree] = 1;
+            }
         }
 
+            // TODO Problem 2 - ADD YOUR CODE HERE
         return degrees;
+        
     }
 
     /// <summary>
@@ -67,6 +90,51 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
+        if (word1.Length != word2.Length)
+        {
+            return false;
+        }
+
+        var dict = new Dictionary<char, int>();
+        foreach (var letter in word1.ToLower())
+        {
+            if (letter != ' ')
+            {
+                if (dict.ContainsKey(letter))
+                {
+                    dict[letter]++;
+                }
+                else
+                {
+                    dict[letter] = 1;
+                }
+            }
+        }
+
+        foreach (var letter in word2.ToLower())
+        {
+            if (letter != ' ')
+            {
+                if (dict.ContainsKey(letter))
+                {
+                    dict[letter]--;
+                    if (dict[letter] == 0)
+                    {
+                        dict.Remove(letter);
+                    }
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        if (dict.Count == 0)
+        {
+            return true;
+        }
+        
         return false;
     }
 
