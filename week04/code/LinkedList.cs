@@ -224,7 +224,6 @@ public class LinkedList : IEnumerable<int>
             yield return curr.Data;
             curr = curr.Prev;
         }
-        // replace this line with the correct yield return statement(s)
     }
 
     public override string ToString()

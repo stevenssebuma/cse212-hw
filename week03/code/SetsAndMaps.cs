@@ -6,7 +6,7 @@ public static class SetsAndMaps
     /// The words parameter contains a list of two character 
     /// words (lower case, no duplicates). Using sets, find an O(n) 
     /// solution for returning all symmetric pairs of words.  
-    ///
+    /// Added a helper function to help with the recursion.
     /// For example, if words was: [am, at, ma, if, fi], we would return :
     ///
     /// ["am & ma", "if & fi"]

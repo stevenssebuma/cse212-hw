@@ -11,6 +11,7 @@ public static class Recursion
     /// in terms of recursive call on a smaller problem and 
     /// to identify a base case (terminating case).  If the value of
     /// n <= 0, just return 0.   A loop should not be used.
+    /// Added a helper function to help with the recursion.
     /// </summary>
     public static int SumSquaresRecursive(int n)
     {
