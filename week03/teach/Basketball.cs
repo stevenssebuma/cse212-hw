@@ -31,10 +31,7 @@ public class Basketball
 
         Console.WriteLine($"Players: {{{string.Join(", ", players)}}}");
 
-        var topPlayers = new string[10];
-    }
-
-    var topPlayers = new string[10];
+        var topPlayers = new string[10];    
  
         var myList = players.ToList();
         myList.Sort((pair1, pair2) => pair2.Value.CompareTo(pair1.Value));
@@ -43,5 +40,7 @@ public class Basketball
             topPlayers[i] = myList[i].Key;
             Console.WriteLine($"{i + 1}. {topPlayers[i]}: {myList[i].Value}");
         }
+
+    }    
  
 }

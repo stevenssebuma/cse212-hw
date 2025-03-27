@@ -1,59 +1,50 @@
-﻿ public class PriorityQueue
-{
-    private List<PriorityItem> _queue = new();
+﻿public class PriorityQueue  
+{  
+    private class QueueItem  
+    {  
+        public string Name { get; }  
+        public int Priority { get; }  
+        public DateTime EnqueueTime { get; }  
 
-    /// <summary>
-    /// Add a new value to the queue with an associated priority.  The
-    /// node is always added to the back of the queue regardless of 
-    /// the priority.
-    /// </summary>
-    /// <param name="value">The value</param>
-    /// <param name="priority">The priority</param>
-    public void Enqueue(string value, int priority)
-    {
-        var newNode = new PriorityItem(value, priority);
-        _queue.Add(newNode);
-    }
+        public QueueItem(string name, int priority)  
+        {  
+            Name = name;  
+            Priority = priority;  
+            EnqueueTime = DateTime.Now;  
+        }  
+    }  
 
-    public string Dequeue()
-    {
-        if (_queue.Count == 0) // Verify the queue is not empty
-        {
-            throw new InvalidOperationException("The queue is empty.");
-        }
+    private readonly List<QueueItem> _queue = new List<QueueItem>();  
 
-        // Find the index of the item with the highest priority to remove
-        var highPriorityIndex = 0;
-        for (int index = 1; index < _queue.Count - 1; index++)
-        {
-            if (_queue[index].Priority >= _queue[highPriorityIndex].Priority)
-                highPriorityIndex = index;
-        }
+    public int Length => _queue.Count;  
 
-        // Remove and return the item with the highest priority
-        var value = _queue[highPriorityIndex].Value;
-        return value;
-    }
+    public void Enqueue(string name, int priority)  
+    {  
+        var item = new QueueItem(name, priority);  
+        _queue.Add(item);  
+        // Sort by priority descending, then by enqueue time ascending  
+        _queue.Sort((x, y) =>   
+        {  
+            if (x.Priority != y.Priority)  
+                return y.Priority.CompareTo(x.Priority);  
+            return x.EnqueueTime.CompareTo(y.EnqueueTime);  
+        });  
+    }  
 
-    public override string ToString()
-    {
-        return $"[{string.Join(", ", _queue)}]";
-    }
-}
+    public string Dequeue()  
+    {  
+        if (_queue.Count == 0)  
+        {  
+            throw new InvalidOperationException("Queue is empty");  
+        }  
 
-internal class PriorityItem
-{
-    internal string Value { get; set; }
-    internal int Priority { get; set; }
+        var item = _queue[0];  
+        _queue.RemoveAt(0);  
+        return item.Name;  
+    }  
 
-    internal PriorityItem(string value, int priority)
-    {
-        Value = value;
-        Priority = priority;
-    }
-
-    public override string ToString()
-    {
-        return $"{Value} (Pri:{Priority})";
-    }
-}
+    public override string ToString()  
+    {  
+        return $"[{string.Join(", ", _queue.Select(i => $"{i.Name} (Pri:{i.Priority})"))}]";  
+    }  
+}  
