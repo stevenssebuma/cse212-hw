@@ -47,7 +47,7 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: calling Dequeue on an empty queue.
     // Expected Result: An InvalidOperationException error should be thrown.
-    // Defect(s) Found: No defects found.
+    // Defect(s) Found: The queue should throw an exception when trying to dequeue from an empty queue.
     public void TestPriorityQueue_3()
     {
         //testing if it throws an exception when called on an empty queue
@@ -100,7 +100,8 @@ public class PriorityQueueTests
     [TestMethod]
     // Scenario: Enqueueing items with duplicate priorities and verifying order.
     // Expected Result: The queue should maintain relative FIFO order for items with the same priority.
-    // Defect(s) Found: No defects found.
+    // Defect(s) Found: 
+    // The queue maintains the order of items with the same priority.
     public void TestPriorityQueue_6()
     {
         //testing adding items correctly in the queue
