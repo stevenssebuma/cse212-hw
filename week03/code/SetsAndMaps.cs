@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 
 public static class SetsAndMaps
@@ -90,52 +91,33 @@ public static class SetsAndMaps
     public static bool IsAnagram(string word1, string word2)
     {
         // TODO Problem 3 - ADD YOUR CODE HERE
+        //removing spaces and convert to lowercase
+        word1 = word1.Replace(" ", "").ToLower();
+        word2 = word2.Replace(" ", "").ToLower();
+
+        //checking if has the same amount of letters
         if (word1.Length != word2.Length)
-        {
             return false;
+
+        //map to check hwo many times a letter in a word
+        int[] letterCount = new int[256];
+
+        // count letters in word1
+        // remove letter that are the same as word2
+        for (int i = 0; i < word1.Length; i++)
+        {
+            letterCount[word1[i]]++;
+            letterCount[word2[i]]--; 
         }
 
-        var dict = new Dictionary<char, int>();
-        foreach (var letter in word1.ToLower())
+        // if it is empty,then words are anagrams
+        foreach (int count in letterCount)
         {
-            if (letter != ' ')
-            {
-                if (dict.ContainsKey(letter))
-                {
-                    dict[letter]++;
-                }
-                else
-                {
-                    dict[letter] = 1;
-                }
-            }
+            if (count != 0)
+                return false;
         }
 
-        foreach (var letter in word2.ToLower())
-        {
-            if (letter != ' ')
-            {
-                if (dict.ContainsKey(letter))
-                {
-                    dict[letter]--;
-                    if (dict[letter] == 0)
-                    {
-                        dict.Remove(letter);
-                    }
-                }
-                else
-                {
-                    return false;
-                }
-            }
-        }
-
-        if (dict.Count == 0)
-        {
-            return true;
-        }
-        
-        return false;
+        return true;
     }
 
     /// <summary>
@@ -169,6 +151,22 @@ public static class SetsAndMaps
         // on those classes so that the call to Deserialize above works properly.
         // 2. Add code below to create a string out each place a earthquake has happened today and its magitude.
         // 3. Return an array of these string descriptions.
-        return [];
+
+        if (featureCollection == null || featureCollection.Features == null)
+        {
+            return Array.Empty<string>();
+        }
+
+        var result = new List<string>();
+
+        foreach (var feature in featureCollection.Features)
+        {
+            if (feature.Properties != null && feature.Properties.Mag.HasValue && !string.IsNullOrWhiteSpace(feature.Properties.Place))
+            {
+                result.Add($"{feature.Properties.Place} - Mag {feature.Properties.Mag.Value}");
+            }
+        }
+
+        return result.ToArray();
     }
 }

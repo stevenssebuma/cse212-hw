@@ -1,57 +1,17 @@
-using System;
-using System.Collections.Generic;
+public class FeatureCollection
+{
+    // TODO Problem 5 - ADD YOUR CODE HERE
+    // Create additional classes as necessary
+    public List<Feature> Features { get; set; } = new();
+}
 
 public class Feature
 {
-    public string Name { get; set; }
-    public Dictionary<string, string> Properties { get; set; }
-
-    public Feature(string name)
-    {
-        Name = name;
-        Properties = new Dictionary<string, string>();
-    }
-
-    public void AddProperty(string key, string value)
-    {
-        Properties[key] = value;
-    }
-
-    public override string ToString()
-    {
-        return $"{Name}: {string.Join(", ", Properties)}";
-    }
+    public Properties Properties { get; set; } = new();
 }
 
-public class FeatureCollection
+public class Properties
 {
-    private List<Feature> features;
-
-    public FeatureCollection()
-    {
-        features = new List<Feature>();
-    }
-
-    public void AddFeature(Feature feature)
-    {
-        features.Add(feature);
-    }
-
-    public void RemoveFeature(string name)
-    {
-        features.RemoveAll(f => f.Name == name);
-    }
-
-    public Feature GetFeature(string name)
-    {
-        return features.Find(f => f.Name == name);
-    }
-
-    public void ListFeatures()
-    {
-        foreach (var feature in features)
-        {
-            Console.WriteLine(feature);
-        }
-    }
+    public string Place { get; set; } = string.Empty;
+    public double? Mag { get; set; }
 }
